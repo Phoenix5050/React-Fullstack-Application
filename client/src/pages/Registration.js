@@ -5,12 +5,12 @@ import axios from "axios";
 
 function Registration() {
   const initialValues = {
-    userName: "",
+    username: "",
     password: "",
   };
 
   const validationSchema = Yup.object().shape({
-    userName: Yup.string().min(3).max(15).required(),
+    username: Yup.string().min(3).max(15).required(),
     password: Yup.string().min(4).max(20).required(),
   });
 
@@ -29,10 +29,10 @@ function Registration() {
       >
         <Form className="formContainer">
           <label>Username: </label>
-          <ErrorMessage name="userName" component="span" />
+          <ErrorMessage name="username" component="span" />
           <Field
             id="inputCreatePost"
-            name="userName"
+            name="username"
             placeholder="(Ex. John123...)"
           />
 

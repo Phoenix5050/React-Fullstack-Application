@@ -9,15 +9,15 @@ function CreatePost() {
   const initialValues = {
     title: "",
     postText: "",
-    userName: "",
+    username: "",
   };
 
   const validationSchema = Yup.object().shape({
     title: Yup.string().required("You must input a title!"),
     postText: Yup.string().required("You must input a post!"),
-    userName: Yup.string()
-      .min(3, "Username must be at least 3 characters")
-      .max(15, "Username must be at most 15 characters")
+    username: Yup.string()
+      .min(3, "username must be at least 3 characters")
+      .max(15, "username must be at most 15 characters")
       .required("You must input a username!"),
   });
 
@@ -50,11 +50,11 @@ function CreatePost() {
             name="postText"
             placeholder="(Ex. Post...)"
           />
-          <label>userName: </label>
-          <ErrorMessage name="userName" component="span" />
+          <label>username: </label>
+          <ErrorMessage name="username" component="span" />
           <Field
             id="inputCreatePost"
-            name="userName"
+            name="username"
             placeholder="(Ex. John...)"
           />
 
