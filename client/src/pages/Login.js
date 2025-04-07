@@ -17,7 +17,11 @@ function Login() {
         alert(response.data.error);
       } else {
         localStorage.setItem("accessToken", response.data);
-        setAuthState(true);
+        setAuthState({
+          username: response.data.username,
+          id: response.data.id,
+          status: true,
+        });
         navigate("/");
       }
     });
