@@ -39,6 +39,7 @@ function Post() {
           console.log(response.data.error);
         } else {
           const commentToAdd = {
+            id: response.data.id,
             commentBody: newComment,
             username: response.data.username,
           };
