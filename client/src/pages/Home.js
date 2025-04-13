@@ -1,12 +1,14 @@
-import React from "react";
+import React from "react";//import React, {useContext} from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
+// import { AuthContext } from "../helpers/AuthContext";
 
 function Home() {
   const [listOfPosts, setListOfPosts] = useState([]);
   const [likedPosts, setLikedPosts] = useState([]);
+  // const { authState } = useContext(AuthContext);
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -17,7 +19,6 @@ function Home() {
         headers: { accessToken: localStorage.getItem("accessToken") },
       })
       .then((response) => {
-        // Safely extract listOfPosts and likedPosts from response.data
         setListOfPosts(response.data.listOfPosts || []);
         setLikedPosts((response.data.likedPosts || []).map((like) => like.PostId));
       })
@@ -75,7 +76,9 @@ function Home() {
             {value.postText}
           </div>
           <div className="footer">
-            <div className="username">{value.username}</div>
+            <div className="username">
+                <Link to={`/profile/${value.UserId}`}> {value.username} </Link>
+            </div>
             <div className="buttons">
               <ThumbUpAltIcon
                 onClick={() => {
