@@ -42,6 +42,8 @@ function App() {
   const logout = () => {
     localStorage.removeItem("accessToken");
     setAuthState({ username: "", id: 0, status: false });
+        window.location.href = "/login"; // To change later, since it will refresh the page without using react router
+    // would need to create navbar class and import into app.js
   };
 
   return (
@@ -50,12 +52,15 @@ function App() {
         <Router>
           <div className="navbar">
             <div className="links">
-              <Link to="/"> Home Page</Link>
-              <Link to="/createpost"> Create A Post</Link>
-              {!authState.status && (
+              {!authState.status ? (
                 <>
                   <Link to="/login"> Login</Link>
                   <Link to="/registration"> Registration</Link>
+                </>
+              ) : (
+                <>
+                  <Link to="/"> Home</Link>
+                  <Link to="/createpost"> Create Post</Link>
                 </>
               )}
             </div>
