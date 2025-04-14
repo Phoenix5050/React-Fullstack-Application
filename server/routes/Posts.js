@@ -5,30 +5,14 @@ const { Posts, Likes } = require('../models');
 const {validateToken} = require("../middlewares/AuthMiddleware");
 
 router.get("/", validateToken, async (req, res) => {
-  try{
-    const listOfPosts = await Posts.findAll({ include: [Likes] });
-
-        // Check if req.user exists and has id
-        if (!req.user || !req.user.id) {
-          return res.status(400).json({ error: "Invalid token or missing user data" });
-        }
-
-    const likedPosts = await Likes.findAll({ where: { UserId: req.user.id } });
-
-    res.json({ listOfPosts: listOfPosts, likedPosts: likedPosts });
-      }
-      catch (error) {
-        console.error("🔥 Error in GET /posts:", error);
-        res.status(500).json({ error: "Internal Server Error", message: error.message });
-      }
+  const listOfPosts = await Posts.findAll({ include: [Likes] });
+  const likedPosts = await Likes.findAll({ where: { UserId: req.user.id } });
+  res.json({ listOfPosts: listOfPosts, likedPosts: likedPosts });
 });
 
 router.get("/byId/:id", async (req, res) => {
   const id = req.params.id;
-  const post = await Posts.findOne({
-    where: { id: id },
-    include: [Likes],
-  });
+  const post = await Posts.findByPk(id);
   res.json(post);
 });
 
@@ -47,6 +31,18 @@ router.post("/", validateToken, async (req, res) => {
   post.UserId = req.user.id;
   await Posts.create(post);
   res.json(post);
+});
+
+router.put("/title", validateToken, async (req, res) => {
+  const { newTitle, id } = req.body;
+  await Posts.update({ title: newTitle }, { where: { id: id } });
+  res.json(newTitle);
+});
+
+router.put("/postText", validateToken, async (req, res) => {
+  const { newText, id } = req.body;
+  await Posts.update({ postText: newText }, { where: { id: id } });
+  res.json(newText);
 });
 
 router.delete("/:postId", validateToken, async (req, res) => {
